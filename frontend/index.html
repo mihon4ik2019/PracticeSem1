@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Catalog</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Подключаем React и Redux через CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/redux@4.2.1/dist/redux.min.js"></script>
+  <script src="https://unpkg.com/react-redux@8.1.3/dist/react-redux.min.js"></script>
+  <script src="https://unpkg.com/redux-thunk@2.4.2/dist/redux-thunk.min.js"></script>
+</head>
+<body>
+    <h1>Каталог товаров</h1>
+    <div id="products"></div>
+
+    <script>
+        fetch('http://localhost:8080/products')
+            .then(response => response.json())
+            .then(data => {
+                const productsContainer = document.getElementById('products');
+                data.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.classList.add('product-card');
+                    productCard.innerHTML = `
+                        <h2>${product.name}</h2>
+                        <p>Цена: ${product.price} руб.</p>
+                        <p>${product.description}</p>
+                    `;
+                    productsContainer.appendChild(productCard);
+                });
+
+                document.appendChild(productsContainer);
+            });
+    </script>
+</body>
+</html>
